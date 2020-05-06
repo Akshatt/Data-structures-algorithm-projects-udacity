@@ -25,15 +25,16 @@ Print a message:
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
 # input - make outgoing calls, no incoming calls, no texts sent or received.
-tel = list(set(i for j in calls for i in j[:1]))
-answering = list(set(i for j in calls for i in j[1:2]))
-text = list(set(i for j in texts for i in j[:2]))
-for i in tel:
-    if i in answering:
-        tel.remove(i)
-        continue
-    if i in text:
-        tel.remove(i)
+possible_tel = set()
+non_tel = set()
+for i in calls:
+    possible_tel.add(i[0])
+    non_tel.add(i[1])
+
+for i in texts:    
+    non_tel.add(i[0])
+    non_tel.add(i[1])    
+
 print("These numbers could be telemarketers: ")
-for i in sorted(tel):
+for i in sorted(possible_tel - non_tel):
     print(i)

@@ -48,15 +48,17 @@ The percentage should have 2 decimal digits
 #input - answering numbers column
 #output - set of area codes and mobile prefixes 
 
-unique_numbers = list(set([i for j in calls for i in j[1:2]]))
+
 areaCode = set()
-for i in unique_numbers:
-    if i[0] == '(':
-        areaCode.add(i.split(')')[0][1:])
-    elif i[0] == '1':
-        areaCode.add('140')
-    else:
-        areaCode.add(i.split()[0][:-1])
+for i in calls:
+    if i[0][:5] == '(080)':
+        if i[1][0] == '(':
+            areaCode.add(i[1].split(')')[0][1:])
+        elif i[1][0] == '1':
+            areaCode.add('140')
+        else:
+            areaCode.add(i[1].split()[0][:-1])
+
 print("The numbers called by people in Bangalore have codes:")
 for i in sorted(areaCode):
     print(i)
